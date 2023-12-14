@@ -1,1 +1,1 @@
-# devrel-content-template
+# image-updater
