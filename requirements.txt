@@ -1,0 +1,7 @@
+certifi
+charset-normalizer
+idna
+requests
+ruamel.yaml
+ruamel.yaml.clib
+urllib3
