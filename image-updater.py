@@ -79,14 +79,15 @@ deprecated_images=[
 
 ## 20.04 aliases ##
   "ubuntu-2004:2022.04.1", "ubuntu-2204:2022.07.1", "ubuntu-2004:2023.04.1", 
-  
+
 ## 22.04 aliases ##
   "ubuntu-2004:2022.04.1", "ubuntu-2204:2022.04.1", "ubuntu-2204:2022.07.1", "ubuntu-2204:2023.04.1",
   "ubuntu-2204:2023.07.2",
 
 ## remote docker aliases ##
   "docker-19.03.12", "docker-19.03.13", "docker-19.03.14", "docker-20.10.2", "docker-20.10.6", "docker-20.10.7", "docker-20.10.11", "docker-20.10.12",
-  "docker-20.10.14", "docker-20.10.17", "docker-20.10.18", "docker-20.10.23"]
+  "docker-20.10.14", "docker-20.10.17", "docker-20.10.18", "docker-20.10.23"
+]
 
 remote_docker_versions = [
     ## remote docker images ##
@@ -181,12 +182,6 @@ for r in repos:
                     old_image = value["machine"]["image"]
                     if '\\' in old_image:
                         old_image.replace('\\', '')
-                else:
-                    print("Unexpected lack of image tag.")
-                    continue
-            if "executor" in value:
-                if "version" in value ["executor"]:
-                    old_image=value["executor"]["version"]
                 else:
                     print("Unexpected lack of image tag.")
                     continue
