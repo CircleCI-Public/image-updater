@@ -46,7 +46,8 @@ if set_defaults == "y":
 deprecated_images=[
 ## android images ##
   "android:202102-01", "android:2021.12.1", "android:2022.01.1", "android:2022.03.1", "android:2022.04.1", "android:2022.06.1", "android:2022.06.2",
-  "android:2022.07.1", "android:2022.08.1", "android:2022.09.1", "android:2023.03.1", "android:2023.06.1", "android:2023.09.1",
+  "android:2022.07.1", "android:2022.08.1", "android:2022.09.1", "android:2023.03.1", "android:2023.04.1", "android:2023.06.1", "android:2023.07.1","android:2023.09.1",
+  "android:2023.11.1",
 
 ## windows 2019 images ##
   "windows-server-2019:201908-06", "windows-server-2019:201908-08", "windows-server-2019-vs2019:201908-02", "windows-server-2019-vs2019:201908-06", 
@@ -54,7 +55,7 @@ deprecated_images=[
 
 ## windows 2022 images ##
   "windows-server-2022-gui:2022.04.1", "windows-server-2022-gui:2022.07.1", "windows-server-2022-gui:2022.08.1", "windows-server-2022-gui:2022.09.1",
-  "windows-server-2022-gui:2023.03.1", "windows-server-2022-gui:2023.05.1", "windows-server-2022-gui:2023.06.1", "windows-server-2022-gui:2023.08.1",
+  "windows-server-2022-gui:2023.03.1", "windows-server-2022-gui:2023.04.1", "windows-server-2022-gui:2023.06.1", "windows-server-2022-gui:2023.07.1",
   "windows-server-2022-gui:2023.09.1", "windows-server-2022-gui:2023.11.1",
 
 ## 20.04 arm images ##
@@ -66,7 +67,7 @@ deprecated_images=[
 
 ## 20.04 amd images ##
   "ubuntu-2004:202008-01", "ubuntu-2004:202101-01", "ubuntu-2004:202104-01", "ubuntu-2004:202107-01", "ubuntu-2004:202107-02", "ubuntu-2004:202111-01",
-  "ubuntu-2004:202201-01", "ubuntu-2004:202201-02", "ubuntu-2004:2022.04.2", "ubuntu-2004:2022.07.1"
+  "ubuntu-2004:202201-01", "ubuntu-2004:202201-02", "ubuntu-2004:2022.04.2", "ubuntu-2004:2022.07.1",
 
 ## 22.04 amd images ##
   "ubuntu-2204:2022.04.2", "ubuntu-2204:2022.07.2", "ubuntu-2204:2022.10.1",
@@ -74,13 +75,14 @@ deprecated_images=[
 ## remote docker images ##
   "docker-17.05.0-ce", "docker-17.06.0-ce", "docker-17.06.1-ce", "docker-17.07.0-ce", "docker-17.09.0-ce", "docker-17.10.0-ce", "docker-17.11.0-ce",
   "docker-17.12.0-ce", "docker-17.12.1-ce", "docker-18.01.0-ce", "docker-18.02.0-ce", "docker-18.03.0-ce", "docker-18.03.1-ce", "docker-18.04.0-ce",
-  "docker-18.05.0-ce", "docker-18.06.0-ce", "docker-18.09.3", "docker-19.03.8", "docker-17.03.0-ce"
+  "docker-18.05.0-ce", "docker-18.06.0-ce", "docker-18.09.3", "docker-19.03.8", "docker-17.03.0-ce",
 
-## 20.04 arm aliases ##
-  "ubuntu-2004:2022.04.1", "ubuntu-2204:2022.07.1"
+## 20.04 aliases ##
+  "ubuntu-2004:2022.04.1", "ubuntu-2204:2022.07.1", "ubuntu-2004:2023.04.1", 
   
-## 22.04 arm aliases ##
-  "ubuntu-2004:2022.04.1", "ubuntu-2204:2022.04.1", "ubuntu-2204:2022.07.1"
+## 22.04 aliases ##
+  "ubuntu-2004:2022.04.1", "ubuntu-2204:2022.04.1", "ubuntu-2204:2022.07.1", "ubuntu-2204:2023.04.1",
+  "ubuntu-2204:2023.07.2",
 
 ## remote docker aliases ##
   "docker-19.03.12", "docker-19.03.13", "docker-19.03.14", "docker-20.10.2", "docker-20.10.6", "docker-20.10.7", "docker-20.10.11", "docker-20.10.12",
