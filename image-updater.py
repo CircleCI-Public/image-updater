@@ -184,12 +184,6 @@ for r in repos:
                 else:
                     print("Unexpected lack of image tag.")
                     continue
-            if "executor" in value:
-                if "version" in value ["executor"]:
-                    old_image=value["executor"]["version"]
-                else:
-                    print("Unexpected lack of image tag.")
-                    continue
             if remote_docker != "":
                 old_image = remote_docker
                 image_family = ""
