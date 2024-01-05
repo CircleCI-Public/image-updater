@@ -2,52 +2,16 @@ version: 2.1
 
 orbs:
   snyk: snyk/snyk@2.0.2
-  
-commands:
-  vulnerability-scan:
-    steps:
-      - checkout
-      - run:
-          name: Setup Scanning
-          command: |
-              git config --global url."https://$GITHUB_USER:$GITHUB_TOKEN@github.com/circleci/".insteadOf "https://github.com/circleci/"
-      - when:
-          condition:
-              or:
-                - equal: [ main, << pipeline.git.branch >> ]
-          steps:
-              - run:
-                  name: Launching Snyk Orb Scanning
-                  command: echo "Running snyk/scan on main; uploading the results"
-              - run:
-                  name: Cleanup RemoteRepoURL
-                  command: echo 'export REMOTE_REPO_URL="${CIRCLE_REPOSITORY_URL%".git"}"' >> "$BASH_ENV"
-              - snyk/scan:
-                  organization: "circleci-public"
-                  fail-on-issues: true
-                  severity-threshold: high
-                  monitor-on-build: true
-                  additional-arguments: "--all-projects --remote-repo-url=${REMOTE_REPO_URL} -d"
-      - unless:
-          condition:
-              or:
-                - equal: [ main, << pipeline.git.branch >> ]
-          steps:
-              - run:
-                  name: Launching Snyk Orb Scanning
-                  command: echo "Running snyk/scan on branch; not uploading the results"
-              - snyk/scan:
-                  organization: "circleci-public"
-                  fail-on-issues: true
-                  severity-threshold: high
-                  monitor-on-build: false
 
 jobs:
   vulnerability-scan:
     docker:
-      - image: cimg/base:2024.01
+      - image: cimg/python:3.12.1
     steps:
       - checkout
+      - run:
+          name: Install packages with pip
+          command: pip install -r requirements.txt
       - run:
           name: Setup Scanning
           command: |
@@ -94,5 +58,6 @@ jobs:
 workflows:
   lint-and-vuln-check:
     jobs:
-      - vulnerability-scan
+      - vulnerability-scan:
+          context: org-global-employees
       - lint
