@@ -1,13 +1,98 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-# Use a package of configuration called an orb.
+
 orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
-# Orchestrate or schedule a set of jobs
+  snyk: snyk/snyk@2.0.2
+  
+commands:
+  vulnerability-scan:
+    steps:
+      - checkout
+      - run:
+          name: Setup Scanning
+          command: |
+              git config --global url."https://$GITHUB_USER:$GITHUB_TOKEN@github.com/circleci/".insteadOf "https://github.com/circleci/"
+      - when:
+          condition:
+              or:
+                - equal: [ main, << pipeline.git.branch >> ]
+          steps:
+              - run:
+                  name: Launching Snyk Orb Scanning
+                  command: echo "Running snyk/scan on main; uploading the results"
+              - run:
+                  name: Cleanup RemoteRepoURL
+                  command: echo 'export REMOTE_REPO_URL="${CIRCLE_REPOSITORY_URL%".git"}"' >> "$BASH_ENV"
+              - snyk/scan:
+                  organization: "circleci-public"
+                  fail-on-issues: true
+                  severity-threshold: high
+                  monitor-on-build: true
+                  additional-arguments: "--all-projects --remote-repo-url=${REMOTE_REPO_URL} -d"
+      - unless:
+          condition:
+              or:
+                - equal: [ main, << pipeline.git.branch >> ]
+          steps:
+              - run:
+                  name: Launching Snyk Orb Scanning
+                  command: echo "Running snyk/scan on branch; not uploading the results"
+              - snyk/scan:
+                  organization: "circleci-public"
+                  fail-on-issues: true
+                  severity-threshold: high
+                  monitor-on-build: false
+
+jobs:
+  vulnerability-scan:
+    docker:
+      - image: cimg/base:2024.01
+    steps:
+      - checkout
+      - run:
+          name: Setup Scanning
+          command: |
+              git config --global url."https://$GITHUB_USER:$GITHUB_TOKEN@github.com/circleci/".insteadOf "https://github.com/circleci/"
+      - when:
+          condition:
+              or:
+                - equal: [ main, << pipeline.git.branch >> ]
+          steps:
+              - run:
+                  name: Launching Snyk Orb Scanning
+                  command: echo "Running snyk/scan on main; uploading the results"
+              - run:
+                  name: Cleanup RemoteRepoURL
+                  command: echo 'export REMOTE_REPO_URL="${CIRCLE_REPOSITORY_URL%".git"}"' >> "$BASH_ENV"
+              - snyk/scan:
+                  organization: "circleci-public"
+                  fail-on-issues: true
+                  severity-threshold: high
+                  monitor-on-build: true
+                  additional-arguments: "--all-projects --remote-repo-url=${REMOTE_REPO_URL} -d"
+      - unless:
+          condition:
+              or:
+                - equal: [ main, << pipeline.git.branch >> ]
+          steps:
+              - run:
+                  name: Launching Snyk Orb Scanning
+                  command: echo "Running snyk/scan on branch; not uploading the results"
+              - snyk/scan:
+                  organization: "circleci-public"
+                  fail-on-issues: true
+                  severity-threshold: high
+                  monitor-on-build: false
+  lint:
+    docker:
+      - image: cimg/python:3.12.1
+    steps:
+      - checkout
+      - run:
+          name: Install flake8 and Lint
+          command: pip install flake8 && flake8 image-updater.py
+
 workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
+  lint-and-vuln-check:
     jobs:
-      - welcome/run
+      - vulnerability-scan
+      - lint
