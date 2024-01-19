@@ -38,12 +38,12 @@ default_docker_tag = ""
 set_defaults = input("would you like to set default tags for each image family? (y/n) ")
 
 if set_defaults == "y":
-    default_android_tag = input("What tag would you like to default android tags to? (press enter to skip)")
-    default_win19_tag = input("What tag would you like to default windows 2019 tags to? (press enter to skip)")
-    default_win22_tag = input("What tag would you like to default windows 2022 tags to? (press enter to skip)")
-    default_focal_tag = input("What tag would you like to default ubuntu 20.04 tags to? (press enter to skip)")
-    default_jammy_tag = input("What tag would you like to default ubuntu 22.04 tags to? (press enter to skip)")
-    default_docker_tag = input("What tag would you like to default remote docker tags to? (press enter to skip)")
+    default_android_tag = input("What tag would you like to default android tags to? (press enter to skip)\n")
+    default_win19_tag = input("What tag would you like to default windows 2019 tags to? (press enter to skip)\n")
+    default_win22_tag = input("What tag would you like to default windows 2022 tags to? (press enter to skip)\n")
+    default_focal_tag = input("What tag would you like to default ubuntu 20.04 tags to? (press enter to skip)\n")
+    default_jammy_tag = input("What tag would you like to default ubuntu 22.04 tags to? (press enter to skip)\n")
+    default_docker_tag = input("What tag would you like to default remote docker tags to? (press enter to skip)\n")
 
 deprecated_images = [
     # android images #
@@ -188,15 +188,15 @@ for r in repos:
                         image_family = old_image.split(":")[0] + ":"
                     else:
                         image_family = "docker"
-                    if default_android_tag != "" and image_family == "android":
+                    if default_android_tag != "" and image_family == "android:":
                         image = image_family + default_android_tag
-                    elif default_win19_tag != "" and image_family == "windows-server-2019-vs2019":
+                    elif default_win19_tag != "" and image_family == "windows-server-2019-vs2019:":
                         image = image_family + default_win19_tag
-                    elif default_win22_tag != "" and image_family == "windows-server-2022-gui":
+                    elif default_win22_tag != "" and image_family == "windows-server-2022-gui:":
                         image = image_family + default_win22_tag
-                    elif default_focal_tag != "" and image_family == "ubuntu-2004":
+                    elif default_focal_tag != "" and image_family == "ubuntu-2004:":
                         image = image_family + default_focal_tag
-                    elif default_jammy_tag != "" and image_family == "ubuntu-2204":
+                    elif default_jammy_tag != "" and image_family == "ubuntu-2204:":
                         image = image_family + default_jammy_tag
                     elif default_docker_tag != "" and image_family == "docker":
                         image = "docker-" + default_docker_tag
