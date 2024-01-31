@@ -2,6 +2,7 @@ import requests
 import json
 import sys
 import base64
+import re
 from ruamel.yaml import YAML
 from pathlib import Path
 
@@ -147,7 +148,8 @@ for r in repos:
 
     # Split into different variables per newline, and remove leading dashes if they are present.
     result_text = result_text.replace(r"---", "")
-    result_text = result_text.replace(r'\n', '\n')
+    regex = r"(?<!\\)(\\n)"
+    result_text = re.sub (regex, "\n", result_text)
     result_text = result_text[2:-1]
 
     yaml.preserve_quotes = False
