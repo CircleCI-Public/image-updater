@@ -21,8 +21,7 @@ jobs:
               or:
                 - equal: [ main, << pipeline.git.branch >> ]
           steps:
-              - run:
-                  name: Launching Snyk Orb Scanning
+              - run:                  name: Launching Snyk Orb Scanning
                   command: echo "Running snyk/scan on main; uploading the results"
               - run:
                   name: Cleanup RemoteRepoURL
