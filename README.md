@@ -1,4 +1,7 @@
 # Image Updater
+
+NOTE: This is currently in ALPHA and we are looking into improving experience for customers.
+
 An update script for updating deprecated machine images quickly and automatically across entire orgs.
 
 ## Usage
