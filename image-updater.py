@@ -92,12 +92,20 @@ remote_docker_versions = [
 
 # Get all repos.
 def fetch_repos():
-    call_url = api_url + "orgs/" + api_org + "/repos"
+    call_url = api_url + f"orgs/{api_org}/repos?per_page=100"
     res = requests.get(call_url, headers=headers)
     if res.status_code != 200:
         print("Organization " + api_org + " is not valid, or you don't have access to it. Confirm your API Key is correct as well.")
         sys.exit(1)
-    return res
+
+    repos = res.json()
+    while 'next' in res.links.keys():
+        res = requests.get(res.links['next']['url'], headers=headers)
+        if res.status_code != 200:
+            print("Organization " + api_org + " is not valid, or you don't have access to it. Confirm your API Key is correct as well.")
+            sys.exit(1)
+        repos.extend(res.json())
+    return repos
 
 
 # For each repo, investigate for a .circleci/config.yml file being present in the main branch.
@@ -133,8 +141,7 @@ def machine_check(config: str):
 
 
 # An initial call to get all repos.
-response = fetch_repos()
-repos = response.json()
+repos = fetch_repos()
 
 # Run through each of them.
 for r in repos:
