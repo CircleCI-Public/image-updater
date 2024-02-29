@@ -118,16 +118,14 @@ def repo_scan(repo):
         data = json.loads(result.content)
         yaml_file = requests.get(data["download_url"], headers=headers)
 
-        if str(yaml_file.content).find("machine:") == -1:
-            print("No entry for \"machine:\" found")
+        if str(yaml_file.content).find("machine:") == -1 and str(yaml_file.content).find("setup_remote_docker") == -1:
+            print("No entry for \"machine:\" or \"setup_remote_docker\" found")
             return False
-
         else:
             return_data = dict()
             return_data['content'] = str(yaml_file.content)
             return_data['sha'] = data["sha"]
             return return_data
-
     else:
         print("No .circleci/config.yml file found.")
         return False
