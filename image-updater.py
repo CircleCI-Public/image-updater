@@ -165,7 +165,10 @@ for r in repos:
         remote_docker = ""
         for values in value["steps"]:
             if "setup_remote_docker" in values:
-                remote_docker = values["setup_remote_docker"]["version"]
+                if values == "setup_remote_docker":
+                    continue
+                if "version" in values["setup_remote_docker"]:
+                    remote_docker = values["setup_remote_docker"]['version']
 
         if "machine" or "executor" in value or remote_docker != "":
             # The image name can be present under machines, or on the same depth as it, so we need to account for both.
@@ -175,6 +178,8 @@ for r in repos:
             if "machine" in value:
                 if "image" in value:
                     old_image = value["image"]
+                elif value["machine"] is True:  # 'machine: true'
+                    continue
                 elif "image" in value["machine"]:
                     depth = 1
                     old_image = value["machine"]["image"]
