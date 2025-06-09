@@ -2,16 +2,17 @@ version: 2.1
 
 orbs:
   snyk: snyk/snyk@2.2.0
+  go: circleci/go@2.2.0
+
+x-data:
+  go_image: &goimage cimg/go:1.24.3
 
 jobs:
   vulnerability-scan:
     docker:
-      - image: cimg/python:3.12.1
+      - image: *goimage
     steps:
       - checkout
-      - run:
-          name: Install packages with pip
-          command: pip install -r requirements.txt
       - run:
           name: Setup Scanning
           command: |
@@ -26,12 +27,20 @@ jobs:
           monitor-on-build: false
   lint:
     docker:
-      - image: cimg/python:3.12.1
+      - image: *goimage
     steps:
       - checkout
       - run:
-          name: Install flake8 and Lint
-          command: pip install flake8 && flake8 image-updater.py
+          name: Run golangci-lint
+          command: golangci-lint run --timeout=5m
+  test:
+    docker:
+      - image: *goimage
+    steps:
+      - checkout
+      - run:
+          name: Run Go Tests
+          command: go test -v ./...
 
 workflows:
   lint-and-vuln-check:
@@ -39,3 +48,4 @@ workflows:
       - vulnerability-scan:
           context: org-global-employees
       - lint
+      - test

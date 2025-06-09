@@ -1,21 +1,21 @@
 # Image Updater
 
-NOTE: This is currently in ALPHA and we are looking into improving experience for customers.
+NOTE: This is currently in ALPHA, and we are looking into improving experience for customers.
 
-An update script for updating deprecated machine images quickly and automatically across entire orgs.
+A script to determine which deprecated machine images need to be changed within repositories across an entire organization.
+
+Limitations:
+* Only supports GitHub lookups
+* Will not find orb specific changes without being pointed at that specific orb config
 
 ## Usage
 
-1. Install the required Python packages with `pip install -r requirements.txt`
-2. Run using `py ./image-updater.py`
-3. [Create a Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with permissions to read and write to your repositories as well as open pull requests.
-4. Either edit the main.py file to insert your Personal Access Token and Organization name, or input them when prompted.
+1. Run Golang locally or within container to execute this script.
+2. [Create a Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with permissions to read from your repositories.
+3. Run: `export GITHUB_TOKEN={INSERT_YOUR_GITHUB_TOKEN}`
+4. Run: `go build -o image-updater cmd/main.go && ./image-updater -org={INSERT_YOUR_ORG_NAME}`
 
-When the script has run, branches should have been created with the name `Deprecated CircleCI Image Update` (unless edited) and a Pull Request created as well. Also, during this, local copies of the config.yml files will be created. These can safely be deleted, but you may want to check them out for debugging purposes.
-
-If the script fails due to a branch creation error, ensure the branch does not exist already. If you ran the script once, it already exists, and thus needs to be deleted.
-
-## 2024 Deprecation Notices
+## 2024 Deprecation Notices - TODO: Update with latest docs when exist
 
 * [Linux](https://discuss.circleci.com/t/linux-image-deprecations-and-eol-for-2024/50177)
 * [Android](https://discuss.circleci.com/t/android-image-deprecations-and-eol-for-2024/50180)

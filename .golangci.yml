@@ -1,0 +1,122 @@
+version: "2"
+linters:
+  default: none
+  enable:
+    - bodyclose
+    - errcheck
+    - funlen
+    - goconst
+    - gocyclo
+    - gosec
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - nakedret
+    - prealloc
+    - revive
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
+  settings:
+    dupl:
+      threshold: 100
+    funlen:
+      lines: 80
+    goconst:
+      min-len: 6
+      min-occurrences: 8
+    gocyclo:
+      min-complexity: 15
+    lll:
+      line-length: 120
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - gosec
+        text: G104
+      - linters:
+          - gosec
+        path: _test\.go
+        text: G601
+      - linters:
+          - gosec
+        path: _test\.go
+        text: G107
+      - linters:
+          - gosec
+        path: _test\.go
+        text: G204
+      - linters:
+          - gosec
+        path: _test\.go
+        text: G304
+      - linters:
+          - gosec
+        text: Deferring unsafe method "Close" on type(.*)$
+      - linters:
+          - staticcheck
+        path: _test\.go
+        text: SA5011
+      - linters:
+          - staticcheck
+        text: SA5001
+      - linters:
+          - staticcheck
+        text: ST1003
+      - linters:
+          - golint
+        text: should have( a package)? comment
+      - linters:
+          - lll
+        source: https?://
+      - linters:
+          - lll
+        source: '"message":'
+      - linters:
+          - lll
+        source: env:"
+      - linters:
+          - errcheck
+        source: ^\s*defer .*\.Close(.*)$
+      - linters:
+          - funlen
+        text: ^Function 'Test.*
+      - linters:
+          - staticcheck
+        text: ST1000
+      - linters:
+          - unparam
+        path: _test\.go
+      - linters:
+          - revive
+        text: 'exported:'
+      - linters:
+          - revive
+        text: 'package-comments:'
+      - linters:
+          - ineffassign
+        text: ineffectual assignment to ctx
+      - linters:
+          - staticcheck
+        text: 'SA4006: this value of `ctx` is never used'
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/CircleCI-Public/image-updater
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
