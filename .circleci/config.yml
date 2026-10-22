@@ -5,7 +5,7 @@ orbs:
   go: circleci/go@2.2.0
 
 x-data:
-  go_image: &goimage cimg/go:1.24.3
+  go_image: &goimage cimg/go:1.26.10
 
 jobs:
   vulnerability-scan:
